@@ -7,6 +7,25 @@ a {
 	cursor: default;
 }
 
+a.home {
+	cursor: default;
+}
+
+a.home:link {
+	color: white;
+}
+
+a.home:visited {
+	color: white;
+}
+
+a.home:hover {
+	color: white;
+}
+
+a.home:active {
+	color: white;
+}
 a:link {
     text-decoration: none;
 }
