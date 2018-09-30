@@ -3,13 +3,13 @@ title: Tongji CTF 2017 主办方writeup
 category: CTF
 ---
 
-## {{ page.title }}
+# {{ page.title }}
 
 by Remind, oblivi0n and brant-ruan
 
 关于本次比赛的详细内容，参见[这里](https://github.com/brant-ruan/TongjiCTF-2017)。
 
-### 0x00 前言
+## 0x00 前言
 
 比赛期间有一些同学来问为什么`Web`题这么少，后面还有没有`Web`的，向这些同学表示歉意。本次比赛偏向于二进制，这是因为我们的出题人搞二进制的(bu)多(hui)一(wai)些(bu)。这里我们祝愿下一届比赛的出题人们把题目出的全面一些。
 
@@ -21,9 +21,9 @@ by Remind, oblivi0n and brant-ruan
 - 另，建议知其然知其所以然
 - 欢迎大家指出错误
 
-### 0x01 Misc
+## 0x01 Misc
 
-#### Misc 100 这也是一道签到题
+### Misc 100 这也是一道签到题
 
 ```
 题目：作为 misc 的签到题，想想还有点小骄傲呢。
@@ -51,7 +51,7 @@ D0YOUKN0WDOT4NDDA5H
 
 (do you know dot and dash)
 
-#### Misc 200 py交易
+### Misc 200 py交易
 
 ```
 题目：
@@ -103,7 +103,7 @@ if __name__ == "__main__":
 
 (踏破铁鞋无觅处)
 
-#### Misc 200 大新闻
+### Misc 200 大新闻
 
 ```
 题目：“近日，安全研究员 MathyVanhoef 发现 WPA2 协议层中存在逻辑缺陷，几乎所有支持Wi-Fi的设备（包括但不限于Android, Linux, Apple,Windows, OpenBSD, MediaTek, Linksys）都面临威胁，其传输的数据存在被嗅探、篡改的风险。攻击者可获取WiFi网络中的数据信息，如信用卡、邮件、账号、照片等，危害巨大。”
@@ -127,7 +127,7 @@ aircrack-ng wifi.cap -w dic.txt
 
 flag：tj{11223344}
 
-#### Misc 200 有毒吧
+### Misc 200 有毒吧
 
 ```
 题目：我怎么总感觉背后有人在盯着我的电脑，总感觉有人知道我在输入什么。。。
@@ -211,7 +211,7 @@ print output
 
 (Logitech USB Listener)
 
-#### Misc 200 月黑风高夜
+### Misc 200 月黑风高夜
 
 ```
 题目：听说这是嘉定的晚上。。
@@ -225,9 +225,9 @@ print output
 
 （招财进宝，我爱莹草）
 
-### 0x02 Crypto
+## 0x02 Crypto
 
-#### Crypto 100 RSA
+### Crypto 100 RSA
 
 ```
 题目：杨老师：将大整数分解为质因数是攻克RSA加密的核心。今天的作业很简单，求这个98位数的最大质因数：
@@ -239,7 +239,7 @@ print output
 
 flag: tj{5527278404454199535821801}
 
-#### Crypto 200 WANNACRY
+### Crypto 200 WANNACRY
 
 ```
 题目：If you WANNACRY, cry on my shoulders....
@@ -276,7 +276,7 @@ for i,j in zip( cipher , cycle(keystream) ):
 
 (Awesome Windows media)
 
-#### Crypto 300 感觉药丸
+### Crypto 300 感觉药丸
 
 ```
 题目：一觉醒来沈老师的作业变成了这样，还怎么拿优？
@@ -298,9 +298,9 @@ for i,j in zip( cipher , cycle(keystream) ):
 
 flag: tj{substitudeisnotsafe}
 
-### 0x03 Web
+## 0x03 Web
 
-#### Web 100 这是一道XinSaiSai的题目
+### Web 100 这是一道XinSaiSai的题目
 
 ```
 题目：某无聊管理员在后台默默窥屏中。千万别输入什么见不得人的东西，他肯定会点开偷偷看哦~
@@ -366,9 +366,9 @@ PHP在处理字符串时，如果使用`!=`或`==`来进行比较，则它把每
 
 (Dark Magic Named 0E)
 
-### 0x04 Pwn
+## 0x04 Pwn
 
-#### Pwn 100 这也叫缓冲区溢出？
+### Pwn 100 这也叫缓冲区溢出？
 
 ```
 题目：仿佛听到了莫里斯杠铃般的笑声。。。
@@ -394,7 +394,7 @@ IDA打开程序，对`Kid()`函数F5：
 
 (welcome to the real world my kid)
 
-#### Pwn 200 这还是缓冲区溢出？
+### Pwn 200 这还是缓冲区溢出？
 
 ```
 题目：嗯，听说你很厉害。。。
@@ -430,7 +430,7 @@ IDA打开程序，对`Kid()`函数F5：
 
 (Behind every great fortune there is a crime)
 
-#### Pwn 300 C语言超级程序设计
+### Pwn 300 C语言超级程序设计
 
 ```
 题目：完，看来遇上大灰阔了。
@@ -477,7 +477,7 @@ conn.interact()
 
 (never guess gin's thoughts)
 
-#### Pwn 400 C语言-还有这种操作-程序设计
+### Pwn 400 C语言-还有这种操作-程序设计
 
 ```
 题目：停车！这不是去幼儿园的车！
@@ -533,7 +533,7 @@ conn.interact()
 
 (hahahahahahahaha you must be genius)
 
-#### Pwn 500 ？？？？？
+### Pwn 500 ？？？？？
 
 ```
 题目：:P
@@ -632,9 +632,9 @@ conn.interact()
 
 (veni!! vidi!! vici!! boy you win:))
 
-### 0x05 Reverse
+## 0x05 Reverse
 
-#### Reverse 100 这是一道签到题
+### Reverse 100 这是一道签到题
 
 ```
 题目：听说隔壁有好几个跟我名字一样的？我才是真的签到题。。（是最近流行这个还是咋滴？听说某心云也是各种重名）
@@ -692,7 +692,7 @@ public class MainActivity
 
 查询ASCII码表之后即可得到**tj{qsydtyy_myhcslx}**（青山一道同云雨，明月和曾是两乡，本来想作为LSB的flag的，后来因为某些原因。。。）
 
-#### Reverse 200 .NETTEN.
+### Reverse 200 .NETTEN.
 
 ```
 题目：When will my reflection show Who I am inside...
@@ -766,7 +766,7 @@ flag.Length == 33 &&
 `sha1`为**NET**；  
 拼凑后得出flag为**tj{4re_Ujou_R3@clcly?.NET_iS_Ez!}**（Are_you_readdy?.NET_is_easy）。
 
-#### Reverse 300 Hijack
+### Reverse 300 Hijack
 
 ```
 题目：Remind大一的时候写了一个二维码生成程序，写的时候只有他和老天知道他在写什么；现在过了两年，只有老天知道他当时写的是什么了。
@@ -820,7 +820,7 @@ int main()
 
 二进制8位转1位ASCII得到**tj{70u_1i@n9_hUaN_z|-|u}**（偷梁换柱）。
 
-#### Reverse 400 Quanter
+### Reverse 400 Quanter
 
 ```
 题目：Remind想要进行程序化交易，但由于证监会视其为洪水猛兽，下令对其进行了封杀，因此各券商逐步关闭了交易接口。贼心不死的Remind在网上找到了通达信的dll及其导出函数的使用说明。可惜的是，这个dll是收费的，每个dll绑定一个交易账户，初步分析后发现，dll作者首先会将用户的交易账户通过某种算法加密后内置在dll中，当使用dll的导出函数进行登陆时，会对交易账户做校验，如果不符合则无法交易。Remind想要让大家都可以享受量化交易的乐趣，而不需要支付高额的费用，于是他想请你帮他研究一下这个加密算法。如果能从密文反推出明文（交易账户），那么离彻底破解也就不远了，你能帮帮他吗？（上文为背景，本次比赛试题已将dll、交易函数等无关内容剥离，只需关注如何破解加密算法即可）
@@ -964,7 +964,7 @@ int main()
 
 **tj{N07_oN!y_A_coDeR_8ut_aLSo_4_qu@n73r}**（Not_only_a_coder_but_also_a_quanter）
 
-#### Reverse 500 I wrote Python
+### Reverse 500 I wrote Python
 
 ```
 题目：题面还真的不好编呢，参见题目吧。
@@ -1159,7 +1159,7 @@ print('Success')
 
 显而易见**tj{0pCoDe_h@S_8eeN_rEP1aceD}**（opcode_has_been_replaced）
 
-#### Reverse 500 VMP
+### Reverse 500 VMP
 
 ```
 题目：杀毒软件有可能会误报，本次比赛所有的可执行文件均无恶意代码，请放心使用
@@ -1338,7 +1338,7 @@ flag = tj{th1N9s_@lVVays_G3t_w0rsE_8Efore_tHey_get_b3t7eR}
 
 **tj{th1N9s_@lVVays_G3t_w0rsE_8Efore_tHey_get_b3t7eR}**（things_always_get_worse_before_they_get_better）
 
-#### 附录1：all.py
+## 附录1：all.py
 
 ```python
 from __future__ import division
