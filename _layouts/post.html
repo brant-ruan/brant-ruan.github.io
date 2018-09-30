@@ -34,6 +34,7 @@
 		<!-- Link Gitalk 的支持文件  -->
 		<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
 		<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+		<script src="{{ site.url }}/resources/js/md5.js"></script>
 		<div id="gitalk-container"></div>     <script type="text/javascript">
 			const gitalk = new Gitalk({
 
@@ -43,7 +44,7 @@
 				repo: 'blog-comments',
 				owner: 'brant-ruan',
 				admin: ['brant-ruan'],
-				id: location.pathname,
+				id: md5(location.pathname),
 			});
 			gitalk.render('gitalk-container');
 		</script>
