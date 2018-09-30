@@ -700,19 +700,19 @@ public class MainActivity
 
 看题目的名字是.NET逆向，如果没有看出来也没有关系，可以通过PE查壳工具查看。
 
-![]({{ site.url }}/images/TongjiCTF2017wp/.NETTEN.-01.png)
+![]({{ site.url }}/images/TongjiCTF2017wp/NETTEN.-01.png)
 
 或者在程序运行时，查看它加载的dll也能发现这是.NET程序。
 
-![]({{ site.url }}/images/TongjiCTF2017wp/.NETTEN.-02.jpg)
+![]({{ site.url }}/images/TongjiCTF2017wp/NETTEN.-02.jpg)
 
 .NET的逆向分析工具比较多样，以ILSpy为例，先反编译查看源码：
 
-![]({{ site.url }}/images/TongjiCTF2017wp/.NETTEN.-03.png)
+![]({{ site.url }}/images/TongjiCTF2017wp/NETTEN.-03.png)
 
 可以看到程序有一个名字为`ReflectionShell.ReflectionCore.exe`的嵌入式资源，程序运行后先加载这个资源，并将资源的每一个`byte`和`99`异或。最后使用反射的方法，运行该嵌入式资源（命令行参数原样传入）。
 
-![]({{ site.url }}/images/TongjiCTF2017wp/.NETTEN.-04.png)
+![]({{ site.url }}/images/TongjiCTF2017wp/NETTEN.-04.png)
 
 选中该资源，点击save按钮，将资源剥离出来。
 
@@ -748,7 +748,7 @@ int main()
 
 反编译`ReflectionShell.ReflectionCore-1.exe`：
 
-![]({{ site.url }}/images/TongjiCTF2017wp/.NETTEN.-05.png)
+![]({{ site.url }}/images/TongjiCTF2017wp/NETTEN.-05.png)
 
 可以看到flag的判断逻辑：
 
