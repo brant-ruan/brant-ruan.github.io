@@ -2,3 +2,23 @@
 ---
 
 @import "{{ site.theme }}";
+
+a {
+	cursor: default;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
