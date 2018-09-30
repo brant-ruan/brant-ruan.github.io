@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+
+    {% if site.google_analytics %}
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ site.google_analytics }}');
+      </script>
+    {% endif %}
+    <meta charset="UTF-8">
+
+{% seo %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+	<title>br's blog</title>
+  </head>
+  <body>
+    <header class="page-header" role="banner">
+      <a href="{{ site.url }}" class="home"><h1 class="project-name">brant-ruan's blog</h1></a>
+      <h2 class="project-tagline">verrückt</h2>
+    </header>
+
+    <main id="content" class="main-content" role="main">
+		{{ content }}
+
+      <footer class="site-footer">
+      </footer>
+	    <!-- Gitalk 评论 start  -->
+		<!-- Link Gitalk 的支持文件  -->
+		<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+		<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+		<div id="gitalk-container"></div>     <script type="text/javascript">
+			var gitalk = new Gitalk({
+
+			// gitalk的主要参数
+				clientID: `89624947b50ac2c7fd04`,
+				clientSecret: `39f61bd94a6075c8419fcc6f0a9993fdb2d11e7`,
+				repo: `blog-comments`,
+				owner: 'brant-ruan',
+				admin: ['brant-ruan'],
+				id: ''window.location.pathname'',
+
+			});
+			gitalk.render('gitalk-container');
+		</script>
+		<!-- Gitalk end -->
+    </main>
+  </body>
+</html>
