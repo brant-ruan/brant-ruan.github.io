@@ -36,15 +36,15 @@
 		<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
 		<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
 		<div id="gitalk-container"></div>     <script type="text/javascript">
-			var gitalk = new Gitalk({
+			const gitalk = new Gitalk({
 
 			// gitalk的主要参数
-				clientID: `89624947b50ac2c7fd04`,
-				clientSecret: `39f61bd94a6075c8419fcc6f0a9993fdb2d11e7`,
-				repo: `blog-comments`,
+				clientID: '89624947b50ac2c7fd04',
+				clientSecret: '39f61bd94a6075c8419fcc6f0a9993fdb2d11e7',
+				repo: 'blog-comments',
 				owner: 'brant-ruan',
 				admin: ['brant-ruan'],
-				id: ''window.location.pathname'',
+				id: 'location.pathname',
 
 			});
 			gitalk.render('gitalk-container');
