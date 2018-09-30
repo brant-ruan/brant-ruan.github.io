@@ -43,8 +43,7 @@
 				repo: 'blog-comments',
 				owner: 'brant-ruan',
 				admin: ['brant-ruan'],
-				//id: 'location.pathname',
-				id: '<%= page.title.substr(0,48) %>',
+				id: 'location.pathname',
 			});
 			gitalk.render('gitalk-container');
 		</script>
