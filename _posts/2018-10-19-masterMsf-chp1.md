@@ -782,8 +782,6 @@ meterpreter > getuid
 Server username: uid=33, gid=33, euid=33, egid=33
 ```
 
-
-
 ---
 
 ### 网络问题
@@ -1059,10 +1057,6 @@ meterpreter > migrate 2224
 meterpreter > getpid
 Current pid: 2224
 ```
-
-然后我们可以玩一些有意思的，比如桌面截图：
-
-![YhvrylmC.jpeg]({{ site.url }}/images/metasploit/8E49F66BBFB61F25745D1F0B0EF6A4BE.jpg)
 
 渗透阶段接近尾声，我们留一个持久化后门（参考[Metasploit 「控制持久化」权限维持](https://www.bodkin.ren/index.php/archives/431/)）：
 
