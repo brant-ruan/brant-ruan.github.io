@@ -25,8 +25,6 @@ category: metasploit
 6. 后渗透
 7. 报告
 
-![Bildschirmfoto 2018-10-18 um 7.58.15 AM.png]({{ site.url }}/images/metasploit/A995E6D99816B13BCA8D89BDCABD8D0D.png)
-
 这个流程来自[Penetration Testing Execution Standard(PTES)](http://www.pentest-standard.org/index.php/Main_Page)。
 
 > 我建议在使用攻击模块对真实目标进行渗透测试前，在虚拟环境下对所有攻击模块进行模拟测试。
