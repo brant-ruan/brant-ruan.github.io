@@ -1,6 +1,6 @@
 ---
 title: Tongji CTF 2017 主办方writeup
-category: CTF
+category: ctf
 ---
 
 # {{ page.title }}

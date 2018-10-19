@@ -1,9 +1,9 @@
 ---
-category: Sec
+category: rootkit
 title: Linux Rootkit 实验 | 0004 另外几种系统调用挂钩技术
 ---
 
-# Linux Rootkit 实验 | 0004 另外几种系统调用挂钩技术
+# {{ page.title }}
 
 ## 实验说明
 

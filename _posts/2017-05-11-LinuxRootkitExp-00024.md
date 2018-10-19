@@ -1,9 +1,9 @@
 ---
-category: Sec
+category: rootkit
 title: Linux Rootkit 实验 | 00024 Rootkit 基本功能实现x隐藏端口
 ---
 
-# Linux Rootkit 实验 | 00024 Rootkit 基本功能实现x隐藏端口
+# {{ page.title }}
 
 ## 实验说明
 

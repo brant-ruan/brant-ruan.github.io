@@ -1,9 +1,9 @@
 ---
-category: Sec
+category: rootkit
 title: Linux Rootkit 实验 | 0000 LKM 的基础编写&隐藏
 ---
 
-# Linux Rootkit 实验 | 0000 LKM 的基础编写&隐藏
+# {{ page.title }}
 
 ## 实验说明
 

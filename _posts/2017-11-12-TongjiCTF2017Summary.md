@@ -1,6 +1,6 @@
 ---
 title: Tongji CTF 2017 个人总结
-category: Essay
+category: ctf
 ---
 
 # {{ page.title }}

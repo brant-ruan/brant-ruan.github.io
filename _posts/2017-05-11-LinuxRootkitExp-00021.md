@@ -1,9 +1,9 @@
 ---
-category: Sec
+category: rootkit
 title: Linux Rootkit 实验 | 00021 Rootkit 基本功能实现xROOT后门
 ---
 
-# Linux Rootkit 实验 | 00021 Rootkit 基本功能实现xROOT后门
+# {{ page.title }}
 
 ## 实验说明
 

@@ -1,9 +1,9 @@
 ---
-category: Sec
+category: rootkit
 title: Linux Rootkit 实验 | 00025 Rootkit 基本功能实现x隐藏内核模块
 ---
 
-# Linux Rootkit 实验 | 00025 Rootkit 基本功能实现x隐藏内核模块
+# {{ page.title }}
 
 ## 实验说明
 

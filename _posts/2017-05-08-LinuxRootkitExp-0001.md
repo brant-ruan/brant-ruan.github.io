@@ -1,9 +1,9 @@
 ---
-category: Sec
+category: rootkit
 title: Linux Rootkit 实验 | 0001 基于修改sys_call_table的系统调用挂钩
 ---
 
-# Linux Rootkit 实验 | 0001 基于修改sys_call_table的系统调用挂钩
+# {{ page.title }}
 
 ## 实验说明
 

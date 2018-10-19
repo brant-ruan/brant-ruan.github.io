@@ -1,9 +1,9 @@
 ---
 title: 打印店病毒分析 - MyDocument.exe
-category: Sec
+category: sec
 ---
 
-# 打印店病毒分析 - MyDocument.exe
+# {{ page.title }}
 
 样本仅供学习研究使用：
 

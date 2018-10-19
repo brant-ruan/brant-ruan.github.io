@@ -1,9 +1,9 @@
 ---
 title: Linux 反弹shell实践
-category: Sec
+category: sec
 ---
 
-# Linux 反弹shell实践
+# {{ page.title }}
 
 ## 0x00 前述
 

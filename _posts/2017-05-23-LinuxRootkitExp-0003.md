@@ -1,9 +1,9 @@
 ---
-category: Sec
+category: rootkit
 title: Linux Rootkit 实验 | 0003 Rootkit 感染关键内核模块实现持久化
 ---
 
-# Linux Rootkit 实验 | 0003 Rootkit 感染关键内核模块实现持久化
+# {{ page.title }}
 
 ## 实验说明
 

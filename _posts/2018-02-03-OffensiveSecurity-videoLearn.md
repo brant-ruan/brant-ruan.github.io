@@ -1,6 +1,6 @@
 ---
 title: OffensiveSecurity 渗透测试视频学习笔记
-category: Sec
+category: sec
 ---
 
 # {{ page.title }}

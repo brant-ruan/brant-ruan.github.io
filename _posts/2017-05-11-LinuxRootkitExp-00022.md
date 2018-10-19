@@ -1,9 +1,9 @@
 ---
-category: Sec
+category: rootkit
 title: Linux Rootkit 实验 | 00022 Rootkit 基本功能实现x隐藏文件
 ---
 
-# Linux Rootkit 实验 | 00022 Rootkit 基本功能实现x隐藏文件
+# {{ page.title }}
 
 ## 实验说明
 

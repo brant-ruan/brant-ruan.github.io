@@ -1,9 +1,9 @@
 ---
-category: Sec
+category: rootkit
 title: Linux Rootkit 实验 | 00020 Rootkit 基本功能实现x阻止模块加载
 ---
 
-# Linux Rootkit 实验 | 00020 Rootkit 基本功能实现x阻止模块加载
+# {{ page.title }}
 
 ## 实验说明
 

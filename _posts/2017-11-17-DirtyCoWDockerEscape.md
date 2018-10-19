@@ -1,9 +1,9 @@
 ---
 title: CVE-2016-5195 实验 | DirtyCoW与Docker逃逸
-category: Sec
+category: sec
 ---
 
-# CVE-2016-5195 实验 | DirtyCoW与Docker逃逸
+# {{ page.title }}
 
 ## 0x00 前述
 
