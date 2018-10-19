@@ -323,3 +323,136 @@ Got it!
 ![Screen Shot 2018-05-19 at 3.30.36 PM.png]({{ site.url }}/images/powershell/F62D24B63BE72940E3FE10ED56D16642.png)
 
 不过，这个功能略鸡肋啊。
+
+## 补充知识
+
+注：[在线教程](https://www.pstips.net/powershell-online-tutorials)。
+
+### 交互式
+
+基本C语言中的算术运算符在这里都能用。另外`0xdeadbeef`这种十六进制也可以用。同时，它还能识别`tb/gb/mb/kb`，如`1gb`：
+
+![Screen Shot 2018-05-28 at 6.45.10 PM.png]({{ site.url}}/images/powershell/C420E34FE64AC96AA3193453899ABAE0.png)
+
+通过字符串执行外部程序：
+
+![Screen Shot 2018-05-28 at 6.47.09 PM.png]({{ site.url}}/images/powershell/49E9775DEC882D2AE320B095048FA0F8.png)
+
+通过`Get-Command | gm`查看命令集的类型（目前我的环境上有三种）：
+
+- System.Management.Automation.AliasInfo
+- System.Management.Automation.FunctionInfo
+- System.Management.Automation.CmdletInfo
+
+通过函数来将带有常用参数的命令扩展为别名：
+
+```powershell
+function test-conn { Test-Connection  -Count 2 -ComputerName $args}
+```
+
+注意，`$args`为占位符。
+
+执行VBS脚本：
+
+```powershell
+cscript.exe .\test.vbs
+```
+
+Powershell调用入口的优先级
+
+- 别名：控制台首先会寻找输入是否为一个别名，如果是，执行别名所指的命令。因此我们可以通过别名覆盖任意powershell命令，因为别名的优先级最高。
+- 函数：如果没有找到别名，会继续寻找函数，函数类似别名，只不过它包含了更多的powershell命令。因此可以自定义函数扩充cmdlet 把常用的参数给固化进去。
+- 命令：如果没有找到函数，控制台会继续寻找命令，即cmdlet，powershell的内部命令。
+- 脚本：没有找到命令，继续寻找扩展名为“.ps1”的Powershell脚本。
+- 文件：没有找到脚本，会继续寻找文件，如果没有可用的文件，控制台会抛出异常。
+
+默认的安全设置禁止执行脚本：
+
+![Screen Shot 2018-05-28 at 6.57.12 PM.png]({{ site.url}}/images/powershell/F41923DAFB78AEE9CD72F1F6F7BDD781.png)
+
+### 变量
+
+#### 定义变量
+
+- 不需要显式声明
+- 可以自动创建变量
+- 字母不区分大小写
+- 变量的前缀为$
+- 几乎可以把任何数据赋值给变量，一切都是对象
+- 交换两变量的值非常简单
+
+以上特性可以参照下图：
+
+![Screen Shot 2018-05-28 at 7.05.34 PM.png]({{ site.url}}/images/powershell/7BAC77E8382A6C147F4791B766762506.png)
+
+变量被存放在`Variable`的`Drive`中：
+
+![Screen Shot 2018-05-28 at 7.07.17 PM.png]({{ site.url}}/images/powershell/35F713238CC8EC05F126A0E65A30EF3F.png)
+
+验证变量是否存在：
+
+![Screen Shot 2018-05-28 at 7.09.49 PM.png]({{ site.url}}/images/powershell/03107810E336F0DBA7F2E851509F8014.png)
+
+（这与验证文件是否存在一样，关于原理可以参考[Chapter 5 使用提供程序](quiver-note-url/E74F3CE4-45A1-453D-BF49-C5F809AF5B2D)）
+
+PowerShell提供5个管理变量的命令：
+
+- Clear-Variable
+- Remove-Variable
+- Set-Variable
+- Get-Variable
+- New-Variable
+
+后两个比较有用。比如：
+
+- 创建只读变量
+
+![Screen Shot 2018-05-28 at 7.11.58 PM.png]({{ site.url}}/images/powershell/2C4C249A1D2207C716D9620880B9B95A.png)
+
+- 创建常量
+
+![Screen Shot 2018-05-28 at 7.13.56 PM.png]({{ site.url}}/images/powershell/C35F9135F07FE30CFEB771937AE1793D.png)
+
+通过`help about_scope`可以详细了解。
+
+#### 自动化变量
+
+**自动化变量**是那些一旦打开Powershell就会自动加载的变量：
+
+![Screen Shot 2018-05-28 at 7.15.40 PM.png]({{ site.url}}/images/powershell/EBCC7E9863FF465FC11D483D2D42407B.png)
+
+可以通过
+
+```powershell
+help about_Automatic_Variables
+```
+
+深入了解。
+
+#### 环境变量
+
+关于环境变量：
+
+![Screen Shot 2018-05-28 at 7.22.05 PM.png]({{ site.url}}/images/powershell/3BE0AC4D8309C40BF170C913663A456A.png)
+
+借助`.Net`方法，可以使用户设置的环境变量在系统级别生效：
+
+```powershell
+[environment]::SetEnvironmentvariable("myPath", ";c:\powershellscript", "User")
+```
+
+![Screen Shot 2018-05-28 at 7.24.08 PM.png]({{ site.url}}/images/powershell/E538C8E4AED2FFB17514C909EAECFC24.png)
+
+#### 驱动器变量
+
+可以通过`${PATH}`直接访问文件内容（其实这也是一切皆为“项”的体现）：
+
+![Screen Shot 2018-05-28 at 7.27.05 PM.png]({{ site.url}}/images/powershell/596DEE3536559CAC28D3A0D4C7DFC730.png)
+
+甚至函数也可以：
+
+![Screen Shot 2018-05-28 at 7.28.47 PM.png]({{ site.url}}/images/powershell/6B27F4D1640864AB1747AB94C5DDDD88.png)
+
+`$()`子表达式：
+
+![Screen Shot 2018-05-28 at 7.30.29 PM.png]({{ site.url}}/images/powershell/6036E8C55CFBE71FDF798A4D0AD50A68.png)
