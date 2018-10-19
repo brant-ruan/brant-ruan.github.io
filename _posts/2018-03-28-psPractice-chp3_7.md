@@ -332,11 +332,11 @@ Got it!
 
 基本C语言中的算术运算符在这里都能用。另外`0xdeadbeef`这种十六进制也可以用。同时，它还能识别`tb/gb/mb/kb`，如`1gb`：
 
-![Screen Shot 2018-05-28 at 6.45.10 PM.png]({{ site.url}}/images/powershell/C420E34FE64AC96AA3193453899ABAE0.png)
+![Screen Shot 2018-05-28 at 6.45.10 PM.png]({{ site.url }}/images/powershell/C420E34FE64AC96AA3193453899ABAE0.png)
 
 通过字符串执行外部程序：
 
-![Screen Shot 2018-05-28 at 6.47.09 PM.png]({{ site.url}}/images/powershell/49E9775DEC882D2AE320B095048FA0F8.png)
+![Screen Shot 2018-05-28 at 6.47.09 PM.png]({{ site.url }}/images/powershell/49E9775DEC882D2AE320B095048FA0F8.png)
 
 通过`Get-Command | gm`查看命令集的类型（目前我的环境上有三种）：
 
@@ -368,7 +368,7 @@ Powershell调用入口的优先级
 
 默认的安全设置禁止执行脚本：
 
-![Screen Shot 2018-05-28 at 6.57.12 PM.png]({{ site.url}}/images/powershell/F41923DAFB78AEE9CD72F1F6F7BDD781.png)
+![Screen Shot 2018-05-28 at 6.57.12 PM.png]({{ site.url }}/images/powershell/F41923DAFB78AEE9CD72F1F6F7BDD781.png)
 
 ### 变量
 
@@ -383,15 +383,15 @@ Powershell调用入口的优先级
 
 以上特性可以参照下图：
 
-![Screen Shot 2018-05-28 at 7.05.34 PM.png]({{ site.url}}/images/powershell/7BAC77E8382A6C147F4791B766762506.png)
+![Screen Shot 2018-05-28 at 7.05.34 PM.png]({{ site.url }}/images/powershell/7BAC77E8382A6C147F4791B766762506.png)
 
 变量被存放在`Variable`的`Drive`中：
 
-![Screen Shot 2018-05-28 at 7.07.17 PM.png]({{ site.url}}/images/powershell/35F713238CC8EC05F126A0E65A30EF3F.png)
+![Screen Shot 2018-05-28 at 7.07.17 PM.png]({{ site.url }}/images/powershell/35F713238CC8EC05F126A0E65A30EF3F.png)
 
 验证变量是否存在：
 
-![Screen Shot 2018-05-28 at 7.09.49 PM.png]({{ site.url}}/images/powershell/03107810E336F0DBA7F2E851509F8014.png)
+![Screen Shot 2018-05-28 at 7.09.49 PM.png]({{ site.url }}/images/powershell/03107810E336F0DBA7F2E851509F8014.png)
 
 （这与验证文件是否存在一样，关于原理可以参考[Chapter 5 使用提供程序](quiver-note-url/E74F3CE4-45A1-453D-BF49-C5F809AF5B2D)）
 
@@ -407,11 +407,11 @@ PowerShell提供5个管理变量的命令：
 
 - 创建只读变量
 
-![Screen Shot 2018-05-28 at 7.11.58 PM.png]({{ site.url}}/images/powershell/2C4C249A1D2207C716D9620880B9B95A.png)
+![Screen Shot 2018-05-28 at 7.11.58 PM.png]({{ site.url }}/images/powershell/2C4C249A1D2207C716D9620880B9B95A.png)
 
 - 创建常量
 
-![Screen Shot 2018-05-28 at 7.13.56 PM.png]({{ site.url}}/images/powershell/C35F9135F07FE30CFEB771937AE1793D.png)
+![Screen Shot 2018-05-28 at 7.13.56 PM.png]({{ site.url }}/images/powershell/C35F9135F07FE30CFEB771937AE1793D.png)
 
 通过`help about_scope`可以详细了解。
 
@@ -419,7 +419,7 @@ PowerShell提供5个管理变量的命令：
 
 **自动化变量**是那些一旦打开Powershell就会自动加载的变量：
 
-![Screen Shot 2018-05-28 at 7.15.40 PM.png]({{ site.url}}/images/powershell/EBCC7E9863FF465FC11D483D2D42407B.png)
+![Screen Shot 2018-05-28 at 7.15.40 PM.png]({{ site.url }}/images/powershell/EBCC7E9863FF465FC11D483D2D42407B.png)
 
 可以通过
 
@@ -433,7 +433,7 @@ help about_Automatic_Variables
 
 关于环境变量：
 
-![Screen Shot 2018-05-28 at 7.22.05 PM.png]({{ site.url}}/images/powershell/3BE0AC4D8309C40BF170C913663A456A.png)
+![Screen Shot 2018-05-28 at 7.22.05 PM.png]({{ site.url }}/images/powershell/3BE0AC4D8309C40BF170C913663A456A.png)
 
 借助`.Net`方法，可以使用户设置的环境变量在系统级别生效：
 
@@ -441,18 +441,18 @@ help about_Automatic_Variables
 [environment]::SetEnvironmentvariable("myPath", ";c:\powershellscript", "User")
 ```
 
-![Screen Shot 2018-05-28 at 7.24.08 PM.png]({{ site.url}}/images/powershell/E538C8E4AED2FFB17514C909EAECFC24.png)
+![Screen Shot 2018-05-28 at 7.24.08 PM.png]({{ site.url }}/images/powershell/E538C8E4AED2FFB17514C909EAECFC24.png)
 
 #### 驱动器变量
 
 可以通过`${PATH}`直接访问文件内容（其实这也是一切皆为“项”的体现）：
 
-![Screen Shot 2018-05-28 at 7.27.05 PM.png]({{ site.url}}/images/powershell/596DEE3536559CAC28D3A0D4C7DFC730.png)
+![Screen Shot 2018-05-28 at 7.27.05 PM.png]({{ site.url }}/images/powershell/596DEE3536559CAC28D3A0D4C7DFC730.png)
 
 甚至函数也可以：
 
-![Screen Shot 2018-05-28 at 7.28.47 PM.png]({{ site.url}}/images/powershell/6B27F4D1640864AB1747AB94C5DDDD88.png)
+![Screen Shot 2018-05-28 at 7.28.47 PM.png]({{ site.url }}/images/powershell/6B27F4D1640864AB1747AB94C5DDDD88.png)
 
 `$()`子表达式：
 
-![Screen Shot 2018-05-28 at 7.30.29 PM.png]({{ site.url}}/images/powershell/6036E8C55CFBE71FDF798A4D0AD50A68.png)
+![Screen Shot 2018-05-28 at 7.30.29 PM.png]({{ site.url }}/images/powershell/6036E8C55CFBE71FDF798A4D0AD50A68.png)
