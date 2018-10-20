@@ -100,7 +100,38 @@ category: metasploit
 
 `info`有点意思，我们来试一下：
 
-![Bildschirmfoto 2018-10-17 um 11.10.03 PM.png]({{ site.url }}/images/metasploit/FBCC38B38CFF098A8C6C2826B704B432.png)
+```
+msf > search ms17_010
+
+Matching Modules
+================
+
+   Name                                           Disclosure Date  Rank     Description
+   ----                                           ---------------  ----     -----------
+   auxiliary/admin/smb/ms17_010_command           2017-03-14       normal   MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Command Execution
+   auxiliary/scanner/smb/smb_ms17_010                              normal   MS17-010 SMB RCE Detection
+   exploit/windows/smb/ms17_010_eternalblue       2017-03-14       average  MS17-010 EternalBlue SMB Remote Windows Kernel Pool Corruption
+   exploit/windows/smb/ms17_010_eternalblue_win8  2017-03-14       average  MS17-010 EternalBlue SMB Remote Windows Kernel Pool Corruption for Win8+
+   exploit/windows/smb/ms17_010_psexec            2017-03-14       normal   MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Code Execution
+
+
+msf > info exploit/windows/smb/ms17_010_psexec
+
+       Name: MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Code Execution
+     Module: exploit/windows/smb/ms17_010_psexec
+   Platform: Windows
+       Arch: x86, x64
+ Privileged: No
+    License: Metasploit Framework License (BSD)
+       Rank: Normal
+  Disclosed: 2017-03-14
+
+Provided by:
+  sleepya
+  zerosum0x0
+  Shadow Brokers
+  Equation Group
+```
 
 ## 对未知网络进行渗透测试
 
@@ -221,7 +252,51 @@ Matching Modules
 
 我们在msf里就可以获得一些漏洞信息：
 
-![Screen Shot 2018-10-18 at 11.20.55 AM.png]({{ site.url }}/images/metasploit/CD46FA0E26CFA072E320932160EC7EBC.png)
+```
+msf > use exploit/unix/ftp/vsftpd_234_backdoor
+msf exploit(unix/ftp/vsftpd_234_backdoor) > info
+
+       Name: VSFTPD v2.3.4 Backdoor Command Execution
+     Module: exploit/unix/ftp/vsftpd_234_backdoor
+   Platform: Unix
+       Arch: cmd
+ Privileged: Yes
+    License: Metasploit Framework License (BSD)
+       Rank: Excellent
+  Disclosed: 2011-07-03
+
+Provided by:
+  hdm <x@hdm.io>
+  MC <mc@metasploit.com>
+
+Available targets:
+  Id  Name
+  --  ----
+  0   Automatic
+
+Basic options:
+  Name   Current Setting  Required  Description
+  ----   ---------------  --------  -----------
+  RHOST                   yes       The target address
+  RPORT  21               yes       The target port (TCP)
+
+Payload information:
+  Space: 2000
+  Avoid: 0 characters
+
+Description:
+  This module exploits a malicious backdoor that was added to the
+  VSFTPD download archive. This backdoor was introduced into the
+  vsftpd-2.3.4.tar.gz archive between June 30th 2011 and July 1st 2011
+  according to the most recent information available. This backdoor
+  was removed on July 3rd 2011.
+
+References:
+  CVE: Not available
+  OSVDB (73573)
+  http://pastebin.com/AetT9sS5
+  http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
+```
 
 参考[pastebin.com/AetT9sS5](https://pastebin.com/AetT9sS5)发现这是一个vsftpd早期版本源代码中的恶意后门：
 
@@ -484,7 +559,7 @@ RHOSTS => 192.168.6.128
 msf auxiliary(scanner/portscan/tcp) > run
 ```
 
-![Screen Shot 2018-10-18 at 2.49.09 PM.png]({{ site.url }}/images/metasploit/1C64708A2C6FA97C92D07A1F98D0E56B.png)
+![Screen Shot 2018-10-18 at 2.49.09 PM.png]({{ site.url }}/images/metasploit/0001.png)
 
 我们观察到80端口开放，所以检查一下其运行的服务：
 
@@ -1146,7 +1221,34 @@ exploit -j -z
 - 获取meterpreter会话后进行提权前，习惯性的先执行一下bypass UAC
 - sessions很有用，可以看一下它的选项：
 
-![Screen Shot 2018-10-19 at 10.12.19 AM.png]({{ site.url }}/images/metasploit/323108FA6345273C50FF309C9629F7AE.png)
+```
+msf > sessions -h
+Usage: sessions [options] or sessions [id]
+
+Active session manipulation and interaction.
+
+OPTIONS:
+
+    -C <opt>  Run a Meterpreter Command on the session given with -i, or all
+    -K        Terminate all sessions
+    -S <opt>  Row search filter.
+    -c <opt>  Run a command on the session given with -i, or all
+    -d        List all inactive sessions
+    -h        Help banner
+    -i <opt>  Interact with the supplied session ID
+    -k <opt>  Terminate sessions by session ID and/or range
+    -l        List all active sessions
+    -n <opt>  Name or rename a session by ID
+    -q        Quiet mode
+    -s <opt>  Run a script or module on the session given with -i, or all
+    -t <opt>  Set a response timeout (default: 15)
+    -u <opt>  Upgrade a shell to a meterpreter session on many platforms
+    -v        List all active sessions in verbose mode
+    -x        Show extended information in the session table
+
+Many options allow specifying session ranges using commas and dashes.
+For example:  sessions -s checkvm -i 1,3-5  or  sessions -k 1-2,5,6
+```
 
 参考[Metasploit 平常『习惯』的养成](https://www.bodkin.ren/index.php/archives/458/)。
 
