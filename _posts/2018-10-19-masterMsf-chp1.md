@@ -29,7 +29,7 @@ category: metasploit
 
 > 我建议在使用攻击模块对真实目标进行渗透测试前，在虚拟环境下对所有攻击模块进行模拟测试。
 
-> 当我们试图利用这个有漏洞的HFS进行渗透的时候，却发现渗透失败了。这是一种很常见的场景，因为来自外部的恶意流量可能在防火墙处被拦截了。
+> 当我们试图利用这个有漏洞的HFS进行渗透时，却发现渗透失败了。这是一种很常见的场景，因为来自外部的恶意流量可能在防火墙处被拦截了。
 >
 > 若出现这种情况，可以简单地改变入侵的方式，让目标服务器主动建立到我们的连接。防火墙通常会被配置为检测入站流量而不是出站流量。
 
@@ -43,10 +43,11 @@ category: metasploit
 
 ### Metasploit版本
 
-- Metasploit Pro
-- Metasploit Express: 适合初级工程师
-- Metasploit Community: Express精简后的免费版
-- Metasploit Framework: 完全命令行
+- Metasploit Pro: For penetration testers and IT security teams
+- Metasploit Community: For small companies and students
+- Metasploit Framework: For developers and security researchers
+
+See more about Metasploit versions on https://www.rapid7.com/products/metasploit/download/editions/.
 
 ### 基本命令
 
