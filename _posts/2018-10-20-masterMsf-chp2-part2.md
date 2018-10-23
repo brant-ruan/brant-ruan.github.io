@@ -763,7 +763,7 @@ class MetasploitModule < Msf::Post
 > Why is a registry file called a "hive"?
 > Because one of the original developers of Windows NT hated bees.  So the developer who was responsible for the registry snuck in as many bee references as he could. A registry file is called a "hive", and registry data are stored in "cells", which is what honeycombs are made of.
 
-OK，言归正传。加载hive的方法又去调用了`read_profile_list`，目的是通过`HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList`获得系统上的用户配置信息。这里不再展开，有兴趣可以去读源代码。获得hive后就该调用`parse_profiles`去介些这些信息，这部分用到了上节提到的注册表操作功能：
+OK，言归正传。加载hive的方法又去调用了`read_profile_list`，目的是通过`HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList`获得系统上的用户配置信息。这里不再展开，有兴趣可以去读源代码。获得hive后就该调用`parse_profiles`去解析这些信息，这部分用到了上节提到的注册表操作功能：
 
 ```ruby
   def parse_profiles(hives)
