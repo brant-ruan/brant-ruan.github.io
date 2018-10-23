@@ -199,11 +199,98 @@ session.sys.process.get_processes().each do |x|
 end
 ```
 
-把它放在`scripts/meterpreter/`中。
+这里其实有个疑问：如果我自己编写脚本，我怎么知道可以像`session.sys.process.get_processes()`这样调用呢？通过搜索，我获得以下信息：
+
+```ruby
+# msf/core/session.rb
+###
+#
+# The session class represents a post-exploitation, uh, session.
+# Sessions can be written to, read from, and interacted with.  The
+# underlying medium on which they are backed is arbitrary.  For
+# instance, when an exploit is provided with a command shell,
+# either through a network connection or locally, the session's
+# read and write operations end up reading from and writing to
+# the shell that was spawned.  The session object can be seen
+# as a general means of interacting with various post-exploitation
+# payloads through a common interface that is not necessarily
+# tied to a network connection.
+#
+###
+module Session
+
+  include Framework::Offspring
+  # ...
+```
+
+`module Session`中包含了`Framework::Offspring`，而这个`Framework`类就有意思了，它似乎是一个把Metasploit各个部分结合起来的模块：
+
+```ruby
+# msf/core/framework.rb
+###
+#
+# This class is the primary context that modules, scripts, and user
+# interfaces interact with.  It ties everything together.
+#
+###
+class Framework
+```
+
+好吧，这对当前的问题并没有什么用。`process.get_processes()`倒是位于以下代码：
+
+```ruby
+# rex/post/meterpreter/extensions/stdapi/sys/process.rb
+class Process < Rex::Post::Process
+  # ...
+  #
+  # Returns a ProcessList of processes as Hash objects with keys for 'pid',
+  # 'ppid', 'name', 'path', 'user', 'session' and 'arch'.
+  #
+  def Process.get_processes
+    request   = Packet.create_request('stdapi_sys_process_get_processes')
+    processes = ProcessList.new
+
+    response = client.send_request(request)
+
+    response.each(TLV_TYPE_PROCESS_GROUP) { |p|
+    arch = ""
+
+    pa = p.get_tlv_value(TLV_TYPE_PROCESS_ARCH)
+    if !pa.nil?
+      if pa == 1 # PROCESS_ARCH_X86
+        arch = ARCH_X86
+      elsif pa == 2 # PROCESS_ARCH_X64
+        arch = ARCH_X64
+      end
+    else
+      arch = p.get_tlv_value(TLV_TYPE_PROCESS_ARCH_NAME)
+    end
+
+    processes <<
+        {
+          'pid'      => p.get_tlv_value(TLV_TYPE_PID),
+          'ppid'     => p.get_tlv_value(TLV_TYPE_PARENT_PID),
+          'name'     => client.unicode_filter_encode( p.get_tlv_value(TLV_TYPE_PROCESS_NAME) ),
+          'path'     => client.unicode_filter_encode( p.get_tlv_value(TLV_TYPE_PROCESS_PATH) ),
+          'session'  => p.get_tlv_value(TLV_TYPE_PROCESS_SESSION),
+          'user'     => client.unicode_filter_encode( p.get_tlv_value(TLV_TYPE_USER_NAME) ),
+          'arch'     => arch
+        }
+    }
+
+    return processes
+  end
+```
+
+还是没有搞清楚`session.sys.process.get_processes()`各部分之间的关系，可能还是缺乏对Metasploit整体架构的认识吧，慢慢来。
+
+言归正传，把它放在`scripts/meterpreter/`中。
 
 这个也遇到了之前的问题，迁入进程总失败。可能计算机玄学的道行还不够吧。
 
 最后，官方已经不建议去写Meterpreter脚本，而应该去写后渗透模块。
+
+关于编写脚本的更多信息，可以参考[Custom Scripting](https://www.offensive-security.com/metasploit-unleashed/custom-scripting/)。
 
 ## RailGun
 
@@ -288,9 +375,14 @@ client.railgun.add_function('urlmon', 'URLDownloadToFileA', 'DWORD', [
 ])
 ```
 
-参考[Method: Rex::Post::Meterpreter::Extensions::Stdapi::Railgun::Railgun#add_function](https://www.rubydoc.info/github/rapid7/metasploit-framework/Rex/Post/Meterpreter/Extensions/Stdapi/Railgun/Railgun)：
+参考[Method: Rex::Post::Meterpreter::Extensions::Stdapi::Railgun::Railgun](https://www.rubydoc.info/github/rapid7/metasploit-framework/Rex/Post/Meterpreter/Extensions/Stdapi/Railgun/Railgun)：
 
 ```c
+/* Attempts to provide a DLL instance of the given name. 
+ * Handles lazy loading and caching. 
+ * Note that if a DLL of the given name does not exist, returns nil. */
+get_dll(dll_name)
+
 /* Adds a DLL to this Railgun.
  * The windows_name is the name used on the remote 
  * system and should be set appropriately if you want to 
