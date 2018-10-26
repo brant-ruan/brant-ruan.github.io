@@ -720,6 +720,6 @@ use exploit/windows/http/rejetto_hfs_exec
 
 ## 总结
 
-这一番梳理，我对Metasploit的内部结构又多了一些认识。但依然还有很多不懂的地方。后来在网上找到一本非常好的书：[Metasploit - The Exploit Learning Tree](https://www.exploit-db.com/docs/english/27935-metasploit---the-exploit-learning-tree.pdf)。
+通过这一番梳理，我对Metasploit的内部结构又多了一些认识。但依然还有很多不懂的地方。后来在网上找到一本非常好的书：[Metasploit - The Exploit Learning Tree](https://www.exploit-db.com/docs/english/27935-metasploit---the-exploit-learning-tree.pdf)。
 
 真的是路漫漫其修远兮，吾将上下而求索。
