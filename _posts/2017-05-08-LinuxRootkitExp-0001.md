@@ -148,14 +148,14 @@ M="$(shell pwd)"
 {% highlight c %}
 void disable_write_protection(void)
 {
-	unsigned long cr0 = read_cr0();
+    unsigned long cr0 = read_cr0();
     clear_bit(16, &cr0);
     write_cr0(cr0);
 }
 
 void enable_write_protection(void)
 {
-	unsigned long cr0 = read_cr0();
+    unsigned long cr0 = read_cr0();
     set_bit(16, &cr0);
     write_cr0(cr0);
 }
@@ -170,7 +170,7 @@ printk("Old: %d\n", test_bit(X86_CR0_WP_BIT, &cr0));
 disable_write_protection();
 cr0 = read_cr0();
 printk("New: %d\n", test_bit(X86_CR0_WP_BIT, &cr0));
-enable_write_protection
+enable_write_protection();
 cr0 = read_cr0();
 printk("Now: %d\n", test_bit(X86_CR0_WP_BIT, &cr0));
 {% endhighlight %}
@@ -269,10 +269,6 @@ KERN_ALERT 是干嘛的？
 　　另一个朋友会说：“这就是Windows的SSDT HOOK在Linux核上的翻版啊。”  
 　　作者回复说：“是的，眼力不错。都是基于修改系统调用表的系统调用挂钩。Linux 的系统调用表叫 sys_call_table / ia32_sys_call_table，Windows 的系统调用表大家通常叫 SSDT。显然，从学习、实践与理解的角度看，Linux 更适合用来起步。”  
 　　他们的讨论让我学到了知识。社区需要的正是这种讨论，正是这种学习的氛围。谢谢各位师傅的分享。
-
-## 相关文章
-
-- [Linux Rootkit 实验 0000 LKM 的基础编写&隐藏](https://brant-ruan.github.io/sec/2017/05/07/LinuxRootkitExp-0000.html)
 
 ## 参考资料
 

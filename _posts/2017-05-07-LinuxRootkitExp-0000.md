@@ -255,10 +255,6 @@ Module.symvers
 　　可以感受到，`Rootkit`和`Linux kernel`是两个很大的主题。一方面，要进行正向的基础知识学习；另一方面，也可以通过自顶向下的方法，从目标慢慢延伸到原理。  
 　　Just do it.
 
-## 相关文章
-
-- [Linux Rootkit 实验 0001 基于修改sys_call_table的系统调用挂钩](https://brant-ruan.github.io/sec/2017/05/08/LinuxRootkitExp-0001.html)
-
 ## 参考资料
 
 - [Linux Rootkit系列一：LKM的基础编写及隐藏](http://www.freebuf.com/articles/system/54263.html)

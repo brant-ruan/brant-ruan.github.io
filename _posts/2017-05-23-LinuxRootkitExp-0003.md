@@ -336,10 +336,6 @@ mv /root/Rootkit/04/realinj/infected.ko ./ac.ko
 - 提供远程 root shell
 - 整合各种功能，如隐藏提供远程 root shell 的进程及对应端口等。
 
-## 相关文章
-
-- [ELF文件格式](https://brant-ruan.github.io/linux/2016/08/25/ELF-%E6%A0%87%E5%87%86.html)
-
 ## 参考资料
 
 - [Linux Rootkit 系列五：感染系统关键内核模块实现持久化](http://www.freebuf.com/articles/system/109034.html)
