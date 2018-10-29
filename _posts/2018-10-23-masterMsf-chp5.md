@@ -26,7 +26,7 @@ SCADA全称为`Supervisory Control and Data Acquisition`，即`监控和数据�
 
 拓展：关于stuxnet，可以参考
 
-- [brant-ruan/stuxnet](https://github.com/brant-ruan/stuxnet
+- [brant-ruan/stuxnet](https://github.com/brant-ruan/stuxnet)
 - [零日 Zero Days](https://movie.douban.com/subject/26684350/)
 
 ## 利用Shodan查找SCADA系统
@@ -218,7 +218,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 99.92 seconds
 ```
 
-如果我们使用Nmpa脚本去扫描，结果将更加讲却：
+如果我们使用Nmpa脚本去扫描，结果将更加精确：
 
 ```
 sudo nmap -sU --script=ms-sql-info -p1434 -Pn 123.21.114.163
