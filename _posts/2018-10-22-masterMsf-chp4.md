@@ -639,6 +639,13 @@ shellcode.
 
 这样一来似乎可以解释为什么要发两遍数据，但是又引入了一些新问题。
 
+**再更新**
+
+就上面的疑问我请教了原ExP的作者，得到的答复如下：
+
+> the explanation in the forum was for an older exploit, when I sent the new one exploit-db decided to remove the old one.  
+> your first guess is correct I am writing over 2 bytes of the seh address and the other two bytes  are already in memory.
+
 ---
 
 ### 编写模块
