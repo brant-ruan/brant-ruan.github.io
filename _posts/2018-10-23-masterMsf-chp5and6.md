@@ -1,5 +1,5 @@
 ---
-title: MasterMsf 5 对专业服务进行测试
+title: MasterMsf 5/6 对专业服务测试/渗透测试中的工具协同
 category: metasploit
 ---
 
@@ -9,7 +9,10 @@ category: metasploit
 
 > It's better to pay a cent for security than a dollar as a ransom.
 
-本章我们将对各种专业服务进行测试：SCADA/Database。
+第五章、第六章内容比较少，我将它们合并为一篇笔记：
+
+- 第五章我们将对各种专业服务进行测试：SCADA/Database
+- 第六章我们将着眼于Metasploit与其他工具的协作
 
 ## SCADA基本原理
 
@@ -246,6 +249,166 @@ Nmap done: 1 IP address (1 host up) scanned in 8.50 seconds
 
 另外，可以使用`auxiliary/scanner/mssql/mssql_ping`扫描，还可以使用`auxiliary/scanner/mssql/mssql_login`进行暴力破解。在成功登入账户后，还有`mssql_hashdump`/`mssql_enum`/`mssql_sql`/`mssql_exec`等各种模块可以使用。
 
+接下来为第六章内容。
+
+---
+
+## 灰盒测试
+
+灰盒测试指工程师仅仅掌握了少量环境信息。其流程如下：
+
+![Bildschirmfoto 2018-10-29 um 4.46.13 PM.png]({{ site.url }}/images/metasploit/A6D76B68567A25CEF682958AB916D39D.png)
+
+为了完成后面的测试，我们首先需要在Kali中安装OpenVAS、Nessus。Kali地址为`172.16.56.200`，目标机器为Metasploitable2，地址为`172.16.56.130`。参考的安装教程为[OpenVAS：Kali Linux 中的漏洞评估工具](https://linux.cn/article-8441-1.html)。
+
+首先来了解一下Metasploit工作区的概念。它其实类似于IDE中的项目管理，能够把不同的项目区分开。使用工作区可以确保不会将本次测试和其他项目的结果弄混，这一点在我们后面先后用OpenVAS和Nessus进行漏洞扫描时尤为重要。
+
+```
+msf > workspace -h
+Usage:
+    workspace                  List workspaces
+    workspace -v               List workspaces verbosely
+    workspace [name]           Switch workspace
+    workspace -a [name] ...    Add workspace(s)
+    workspace -d [name] ...    Delete workspace(s)
+    workspace -D               Delete all workspaces
+    workspace -r <old> <new>   Rename workspace
+    workspace -h               Show this help information
+```
+
+## OpenVAS与Metasploit协同
+
+Logo很酷！
+
+![Bildschirmfoto 2018-10-29 um 10.42.49 PM.png]({{ site.url }}/images/metasploit/41AD0DF21DEA4530376E11B35148E739.png)
+
+建立一个OpenVAS工作区并添加插件：
+
+```bash
+msf > workspace -a OpenVAS_scan
+[*] Added workspace: OpenVAS_scan
+
+# 查看当前工作区
+msf > workspace 
+  default
+* OpenVAS_scan
+
+msf > load openvas 
+[*] Welcome to OpenVAS integration by kost and averagesecurityguy.
+[*] 
+[*] OpenVAS integration requires a database connection. Once the 
+[*] database is ready, connect to the OpenVAS server using openvas_connect.
+[*] For additional commands use openvas_help.
+[*] 
+[*] Successfully loaded plugin: OpenVAS
+```
+
+将OpenVAS插件与OpenVAS本身连接：
+
+首先启动OpenVAS：
+
+```
+openvas-start
+```
+
+然后在Metasploit中：
+
+```bash
+# 连接
+msf > openvas_connect admin admin localhost 9390 ok
+[*] Connecting to OpenVAS instance at localhost:9390 with username admin...
+[+] OpenVAS connection successful
+
+# 创建扫描目标
+msf > openvas_target_create outer 172.16.56.130 "just test"
+[*] 2ea46499-b9d5-4cb8-9984-0f65bdce2c53
+[+] OpenVAS list of targets
+
+ID                                    Name   Hosts          Max Hosts  In Use  Comment
+--                                    ----   -----          ---------  ------  -------
+2ea46499-b9d5-4cb8-9984-0f65bdce2c53  outer  172.16.56.130  1          0       just test
+
+
+# 查看扫描策略
+msf > openvas_config_list
+OpenVAS list of configs
+
+ID                                    Name
+--                                    ----
+085569ce-73ed-11df-83c3-002264764cea  empty
+2d3f051c-55ba-11e3-bf43-406186ea4fc5  Host Discovery
+698f691e-7489-11df-9d8c-002264764cea  Full and fast ultimate
+708f25c4-7489-11df-8094-002264764cea  Full and very deep
+74db13d6-7489-11df-91b9-002264764cea  Full and very deep ultimate
+8715c877-47a0-438d-98a3-27c7a6ab2196  Discovery
+bbca7412-a950-11e3-9109-406186ea4fc5  System Discovery
+daba56c8-73ec-11df-a475-002264764cea  Full and fast
+
+# 创建扫描任务
+msf > openvas_task_create test_scan test daba56c8-73ec-11df-a475-002264764cea 2ea46499-b9d5-4cb8-9984-0f65bdce2c53
+[*] ab63990d-bdb2-4c5c-bf39-981beaefc612
+[+] OpenVAS list of tasks
+
+ID                                    Name       Comment  Status  Progress
+--                                    ----       -------  ------  --------
+ab63990d-bdb2-4c5c-bf39-981beaefc612  test_scan  test     New     -1
+
+# 扫描
+msf > openvas_task_start ab63990d-bdb2-4c5c-bf39-981beaefc612
+```
+
+## Nessus与Metasploit协同
+
+首先进入WebUI创建一个Policy：
+
+![Bildschirmfoto 2018-10-30 um 7.45.08 AM.png]({{ site.url }}/images/metasploit/0435BFB5F7831330BA8D7BE90501E3C1.png)
+
+![Bildschirmfoto 2018-10-30 um 7.45.34 AM.png]({{ site.url }}/images/metasploit/D62F9C321CB0ABEB89832622A1BAAFA3.png)
+
+![Bildschirmfoto 2018-10-30 um 7.46.39 AM.png]({{ site.url }}/images/metasploit/F66F80287D39C7BBFBB65599EF2A5D78.png)
+
+如上图，我们已经知道目标为Linux，所以可以禁用一些其他操作系统的扫描插件。另外，如果显示没有插件可用，需要在命令行中：
+
+```bash
+/opt/nessus/sbin/nessuscli update
+```
+
+然后进入Msf：
+
+```bash
+msf > workspace -a Nessus_scan
+[*] Added workspace: Nessus_scan
+
+msf > load nessus
+[*] Nessus Bridge for Metasploit
+[*] Type nessus_help for a command listing
+[*] Successfully loaded plugin: Nessus
+
+# 连接
+msf > nessus_connect root:root123@127.0.0.1:8834
+[*] Connecting to https://127.0.0.1:8834/ as root
+[*] User root authenticated successfully.
+
+# 查看扫描策略
+msf > nessus_policy_list 
+Policy ID  Name     Policy UUID
+---------  ----     -----------
+15         mybasic  ad629e16-03b6-8c1d-cef6-ef8c9dd3c658d24bd260ef5f9e66
+
+# 创建扫描任务
+msf > nessus_scan_new ad629e16-03b6-8c1d-cef6-ef8c9dd3c658d24bd260ef5f9e66 ip130-Scan "First Scan" 172.16.56.130
+[*] Creating scan from policy number ad629e16-03b6-8c1d-cef6-ef8c9dd3c658d24bd260ef5f9e66, called ip130-Scan - First Scan and scanning 172.16.56.130
+[*] New scan added
+[*] Use nessus_scan_launch 17 to launch the scan
+Scan ID  Scanner ID  Policy ID  Targets        Owner
+-------  ----------  ---------  -------        -----
+17       1           16         172.16.56.130  root
+
+# 扫描
+msf > nessus_scan_launch 17
+[+] Scan ID 17 successfully launched. The Scan UUID is e7ebc374-8a35-d416-5b9c-a33eb462aecb88cb0150c864700d
+```
+
 ## 总结
 
-这一章有些水，可能是因为接触得比较少，算作开阔眼界吧。
+第五章还有些料，第六章主要是插件的使用方法，不必深究。
