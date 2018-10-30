@@ -192,7 +192,7 @@ meterpreter > download e:\\gadgets\\p2422196991.jpg
 
 或许有人想看看这张照片：
 
-![Bildschirmfoto 2018-10-30 um 10.00.25 PM.png]({{ site.url }}/images/metasploit/E3C3424AA4D58C2DE395828611652A16.png)
+![Bildschirmfoto 2018-10-30 um 10.00.25 PM.png]({{ site.url }}/images/metasploit/E3C3424AA4D58C2DE395828611652A16.jpg)
 
 ## 高级扩展功能
 
