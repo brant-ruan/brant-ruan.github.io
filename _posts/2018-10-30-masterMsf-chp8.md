@@ -1,4 +1,9 @@
-# MasterMsf 8 Metasploit的扩展功能
+---
+title: MasterMsf 8 Metasploit的扩展功能
+category: metasploit
+---
+
+# {{ page.title }}
 
 ## 启程
 
