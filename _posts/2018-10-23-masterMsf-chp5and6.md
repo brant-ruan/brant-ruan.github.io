@@ -7,12 +7,15 @@ category: metasploit
 
 ## 启程
 
-> It's better to pay a cent for security than a dollar as a ransom.
-
 第五章、第六章内容比较少，我将它们合并为一篇笔记：
 
-- 第五章我们将对各种专业服务进行测试：SCADA/Database
-- 第六章我们将着眼于Metasploit与其他工具的协作
+> It's better to pay a cent for security than a dollar as a ransom.
+
+第五章我们将对各种专业服务进行测试：SCADA/Database。
+
+> A chef needs good ingredients to make his best dish, so does a Penetration Test, which need the best of everything to taste a success.
+
+第六章我们将着眼于Metasploit与其他工具的协作
 
 ## SCADA基本原理
 
