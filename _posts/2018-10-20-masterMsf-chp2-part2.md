@@ -5,6 +5,9 @@ category: metasploit
 
 # {{ page.title }}
 
+> How many roads must a man walk down  
+> Before you call him a man
+
 ## 开发自定义模块
 
 ### 编写自定义FTP扫描模块

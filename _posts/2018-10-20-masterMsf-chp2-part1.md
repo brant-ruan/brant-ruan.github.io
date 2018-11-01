@@ -7,6 +7,8 @@ category: metasploit
 
 ## 启程
 
+> 鸡声茅店月，人迹板桥霜。
+
 本章一开始写到：
 
 > One of the greatest challenges in life is being yourself in a world that's trying to make you like everyone else.

@@ -7,6 +7,8 @@ category: metasploit
 
 ## 启程
 
+> 戎衣何日定，歌舞入长安。
+
 本章一开始写到：
 
 > If debugging is the process of removing bugs, then programming must be the process of putting them in.

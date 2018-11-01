@@ -5,6 +5,8 @@ title: Linux Rootkit 实验 | 00025 Rootkit 基本功能实现x隐藏内核模�
 
 # {{ page.title }}
 
+> 转朱阁，低绮户，照无眠。
+
 ## 实验说明
 
 本次实验将初步实现 rootkit 的基本功能：

@@ -5,6 +5,8 @@ category: powershell
 
 # {{ page.title }}
 
+> 很多年 冰山形成以前 鱼曾浮出水面 很多年
+
 ## Chapter 8 对象：数据的另一个名称
 
 `Get-Process`产生的进程表其实是进程对象的集合：

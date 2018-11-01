@@ -5,6 +5,8 @@ category: powershell
 
 # {{ page.title }}
 
+> 你说彼岸灯火，心之所向；后来渔舟晚唱，烟雨彷徨。
+
 ## Chapter 3 使用帮助系统
 
 由于其他平台上的PowerShell功能没有Windows上完整，所以在未加特别说明的情况下，后面的截图等均基于Windows平台。

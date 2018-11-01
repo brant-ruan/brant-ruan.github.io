@@ -5,6 +5,8 @@ category: metasploit
 
 # {{ page.title }}
 
+> 凭君莫话封侯事，一将功成万骨枯。
+
 ## 水面以下：Metasploit的启动过程
 
 注意，我使用的是Mac OSX上的Metasploit。

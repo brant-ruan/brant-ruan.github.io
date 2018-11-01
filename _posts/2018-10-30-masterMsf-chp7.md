@@ -7,6 +7,8 @@ category: metasploit
 
 ## 启程
 
+> “我明白你会来，所以我等。” 
+
 > I am good at reading people. My secret, I look for worst in them.
 
 本章将研究实践对浏览器等客户端的攻击。

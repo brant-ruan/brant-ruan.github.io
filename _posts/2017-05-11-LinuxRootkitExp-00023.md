@@ -5,6 +5,8 @@ title: Linux Rootkit 实验 | 00023 Rootkit 基本功能实现x隐藏进程
 
 # {{ page.title }}
 
+> 衣带渐宽终不悔，为伊消得人憔悴。
+
 ## 实验说明
 
 本次实验将初步实现 rootkit 的基本功能：

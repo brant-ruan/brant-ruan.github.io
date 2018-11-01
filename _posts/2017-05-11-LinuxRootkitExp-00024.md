@@ -5,6 +5,8 @@ title: Linux Rootkit 实验 | 00024 Rootkit 基本功能实现x隐藏端口
 
 # {{ page.title }}
 
+> 昨夜西风凋碧树。独上高楼，望尽天涯路。
+
 ## 实验说明
 
 本次实验将初步实现 rootkit 的基本功能：

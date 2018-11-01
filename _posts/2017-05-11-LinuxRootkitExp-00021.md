@@ -5,6 +5,8 @@ title: Linux Rootkit 实验 | 00021 Rootkit 基本功能实现xROOT后门
 
 # {{ page.title }}
 
+> 时人不识凌云木，直待凌云始道高。
+
 ## 实验说明
 
 本次实验将初步实现 rootkit 的基本功能：

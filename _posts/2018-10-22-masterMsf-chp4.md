@@ -7,6 +7,8 @@ category: metasploit
 
 ## 启程
 
+> 今年花胜去年红。可惜明年花更好，知与谁同？
+
 > Hacking is not the desire in breaking things. It's the desire becoming a smart-ass in things you know nothing about – so others don't have to.
 
 本章我们尝试将其他语言编写的exploit模块移植到Metasploit中。这样做有以下优点：

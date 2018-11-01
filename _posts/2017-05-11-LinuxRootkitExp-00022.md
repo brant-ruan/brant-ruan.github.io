@@ -5,6 +5,8 @@ title: Linux Rootkit 实验 | 00022 Rootkit 基本功能实现x隐藏文件
 
 # {{ page.title }}
 
+> 大江歌罢掉头东，邃密群科济世穷。
+
 ## 实验说明
 
 本次实验将初步实现 rootkit 的基本功能：

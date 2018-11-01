@@ -7,6 +7,8 @@ category: metasploit
 
 ## 启程
 
+> 复恐匆匆说不尽，行人临发又开封。
+
 第五章、第六章内容比较少，我将它们合并为一篇笔记：
 
 > It's better to pay a cent for security than a dollar as a ransom.

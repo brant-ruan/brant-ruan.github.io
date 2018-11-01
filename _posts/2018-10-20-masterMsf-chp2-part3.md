@@ -5,6 +5,8 @@ category: metasploit
 
 # {{ page.title }}
 
+> But you are still you, and I love you.
+
 ## Meterpreter其他功能介绍
 
 在第一章的渗透测试过程中我们已经使用过一些脚本，如

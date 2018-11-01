@@ -5,6 +5,8 @@ title: Linux Rootkit 实验 | 0004 另外几种系统调用挂钩技术
 
 # {{ page.title }}
 
+> 而今忘却来时路，江山暮，天涯目送飞鸿去。
+
 ## 实验说明
 
 本次实验接 [0001 实验](https://brant-ruan.github.io/sec/2017/05/08/LinuxRootkitExp-0001.html)，继续探究系统调用挂钩的方法。核心是获得`sys_call_table`的起始地址。这是因为在`2.6`及以后版本的内核中，`sys_call_table`不再作为导出符号，这意味着我们必须自己获取它的地址。有了地址，挂钩就非常容易了。

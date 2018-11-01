@@ -5,6 +5,8 @@ category: powershell
 
 # {{ page.title }}
 
+> 惟此独立之精神，自由之思想，历千万祀，与天壤而同久，共三光而永光。
+
 ## Chapter 23 高级远程配置
 
 接续[实战指南 Chapter 13 远程处理：一对一及一对多](quiver:///notes/CEC8AF22-D17C-484B-A9BA-4E2C1FF0A922)。

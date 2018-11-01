@@ -5,6 +5,8 @@ category: powershell
 
 # {{ page.title }}
 
+> 明月如镜 高悬草原 映照千年岁月
+
 ## Chapter 13 远程处理：一对一及一对多
 
 PowerShell的远程处理类似于Telnet，即命令在远程主机上运行，结果返回到本地。但是它采用的通信协议不同：WS-MAN (Web Services for Management)，基于HTTP或`HTTPS`，其基于的后台服务为Windows远程管理组件`WinRM`（在有的系统中该服务处于禁用状态）。PowerShell将输出对象序列化到XML中，通过网络传输，到达本地计算机后再反序列化为PowerShell中的对象。

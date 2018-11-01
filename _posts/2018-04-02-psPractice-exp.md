@@ -5,6 +5,8 @@ category: powershell
 
 # {{ page.title }}
 
+> 纵豆蔻词工，青楼梦好，难赋深情。
+
 ## 实验回顾 1-6 章
 
 - 按日期将最新的100个安全日志条目输出为HTML
