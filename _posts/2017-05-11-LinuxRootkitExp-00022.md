@@ -212,7 +212,7 @@ static int filldir(struct dir_context *ctx, const char *name, int namlen,
 }
 {% endhighlight %}
 
-正主是上面这位。现在思路已经形成了：首先钩掉`iterate`，再把我们的`iterate`中`actor`设定为我们自己的`filedir`。`filedir`很复杂，我们把自己的`filedir`做成仅仅给真正的`filedir`加层壳，把我们想要过滤掉的文件名过滤掉（不传给真正的`filedir`），把其他的正常传给`filedir`处理，再经由我们返回即可。
+正主是上面这位。现在思路已经形成了：首先钩掉`iterate`，再把我们的`iterate`中`actor`设定为我们自己的`filldir`。`filldir`很复杂，我们把自己的`filldir`做成仅仅给真正的`filldir`加层壳，把我们想要过滤掉的文件名过滤掉（不传给真正的`filldir`），把其他的正常传给`filldir`处理，再经由我们返回即可。
 
 我们只需要替换掉根目录`/`的`iterate`即可。
 
