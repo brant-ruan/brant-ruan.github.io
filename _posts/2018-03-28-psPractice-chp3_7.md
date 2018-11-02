@@ -1,5 +1,5 @@
 ---
-title:  PowerShell实战指南 3-7
+title:  PowerShell实战指南 Chapter 3-7
 category: powershell
 ---
 
