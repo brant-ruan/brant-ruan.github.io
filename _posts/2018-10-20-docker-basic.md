@@ -5,7 +5,7 @@ category: docker
 
 # {{ page.title }}
 
-## Perface
+## Preface
 
 With the help of Docker I deployed the environment of **Tongji CTF 2017**. Now I want to learn more about it.
 
