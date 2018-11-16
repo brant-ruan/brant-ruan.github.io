@@ -295,7 +295,7 @@ Bingo!
 
 ## 附录二 | Webshell 反弹 Shell
 
-关于反弹 Shell，可以参考我之前的一篇[总结文章](http://aptx4869.me/sec/2017/11/20/Linux-reverseShell.html)。
+关于反弹 Shell，可以参考我之前的一篇[总结文章](https://brant-ruan.github.io/sec/2017/11/20/Linux-reverseShell.html)。
 
 这里想补充的是带有反弹 Shell 功能的 Webshell。可以自行搜索以下关键词：
 
