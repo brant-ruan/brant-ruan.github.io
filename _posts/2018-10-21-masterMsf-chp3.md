@@ -338,7 +338,7 @@ end
   end
 ```
 
-参考[如何向 Metasploit 中增加自定义 exploit 模块？](https://zhuanlan.zhihu.com/p/32509309)，我们可以在`$HOME/.msf4/modules/`下建立对应的目录结构，如`exploits/rambo/`，然后把自己的模块放进去，msfconsole启东时会自动把它加入。
+参考[如何向 Metasploit 中增加自定义 exploit 模块？](https://zhuanlan.zhihu.com/p/32509309)，我们可以在`$HOME/.msf4/modules/`下建立对应的目录结构，如`exploits/rambo/`，然后把自己的模块放进去，msfconsole启动时会自动把它加入。
 
 测试：
 
