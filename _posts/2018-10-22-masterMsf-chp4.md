@@ -643,7 +643,11 @@ shellcode.
 
 **再更新**
 
-就上面的疑问我请教了原ExP的作者，得到的答复如下：
+就上面的疑问我请教了原ExP的作者：
+
+Hello, I find your twitter ID from your post `Bsplayer 2.68 - HTTP Response Universal` on https://www.exploit-db.com/exploits/36477/  I am studying your ExP and want to ask you for help (please). Your ExP uses `seh = "\x3b\x58\x00\x00"`  to execute pop/pop/ret, but `0x0000583b` is not a valid address. I guess only `0x583b` makes effect and you use it to bypass ASLR (There is a pop/pop/ret at 0x0069583b), but after I read your explanation on https://rstforums.com/forum/topic/89205-bsplayer-268-http-response-buffer-overflow/ … I don't know whether my thought is right or not. I have tried to reverse the BSplayer 2.68 and to locate the overflow-location  but it seems that after the unpacking of UPX the program has another pack, and I don't know how to unpack it. Sorry to bother you, can you help me ?
+
+得到的答复如下：
 
 > the explanation in the forum was for an older exploit, when I sent the new one exploit-db decided to remove the old one.  
 > your first guess is correct I am writing over 2 bytes of the seh address and the other two bytes  are already in memory.
