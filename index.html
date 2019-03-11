@@ -23,6 +23,16 @@ title: HOME
 
 {% endfor %}
 
+{% for post in site.categories.binary %}
+
+<li>
+
+  <a href="{{ post.url }}">{{ post.title }}</a>
+
+</li>
+
+{% endfor %}
+
 {% for post in site.categories.0day %}
 
 <li>
