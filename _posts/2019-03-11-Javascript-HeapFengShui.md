@@ -96,7 +96,7 @@ IE 中的三个用于内存分配的主要组件是浏览器堆漏洞利用的�
 
 最后一个大多数浏览器漏洞利用程序会涉及的组件是 ActiveX 控件，它会导致堆破坏。有些 ActiveX 控件使用一个专用堆，但是大多数都会在进程默认堆上进行内存的分配，以及内存的破坏。
 
-重点在于，所有这三个组件都使用同一个进程默认堆。这意味着，借助 JavaScript 分配和释放内存都将改变 MSHTML 和 ActiveX 控件使用的堆的布局，而 存在于 ActiveX 控件中的堆破坏漏洞可以用来覆盖由其他两个组件分配来的内存。
+重点在于，所有这三个组件都使用同一个进程默认堆。这意味着，借助 JavaScript 分配和释放内存都将改变 MSHTML 和 ActiveX 控件使用的堆的布局，而存在于 ActiveX 控件中的堆破坏漏洞可以用来覆盖由其他两个组件分配来的内存。
 
 ### 4.2 JavaScript 字符串
 
@@ -503,7 +503,7 @@ vtable = vtable + heap.padding((1008 - (vtable.length*2+6))/2);
 |padding(len)|返回包含 "A" 字符的特定长度的字符串，该长度不大于 heapLib.ie 构造函数中给定的最大分配值。<br /><br />参数：<br />len - 字符串长度<br /><br />例子：<br />`heap.padding(5)            // 返回 "AAAAA"`|
 |round(num, round)|返回向上取整到指定值倍数的整数。<br /><br />参数：<br />num - 用于向上取整的整数<br />round - 取整的指定值<br /><br />例子：<br />`heap.round(210, 16)        // 返回 224`|
 |hex(num, width)|将整数转换为十六进制字符串。这个函数会用到堆。<br /><br />参数：<br />num - 待转换数字<br />width - 将输出用 0 填充到指定宽度(可选)<br /><br />例子：<br />`heap.hex(210, 8)           // 返回 "000000D2"`|
-|addr(addr)|Converts a 32-bit address to a 4-byte string with the same representation in memory. This function uses the heap.<br /><br />参数：<br />addr - integer representation of the address<br /><br />例子：<br />`heap.addr(0x1523D200)      // returns the equivalent of unescape("%uD200%u1523")`|
+|addr(addr)|将一个 32 位地址转换为内存地址表示方式的 4 字节字符串。这个函数会用到堆。<br /><br />参数：<br />addr - 代表地址的整数<br /><br />例子：<br />`heap.addr(0x1523D200)      // 返回值等价于 unescape("%uD200%u1523")`|
 
 ### 6.4 内存分配
 
@@ -596,7 +596,7 @@ heap.lookaside(0x100);
 
 ### 7.5 借助快表攻击对象指针
 
-一个内存块被放入块表之后的事情非常有趣。我们从一个空的快表链说起。如果堆的基址是 `0x150000`，维护大小为 1008 字节内存块的快表链表头的地址将是 `0x151e58`。块表链是空的，因此这个地方将有一个 `NULL` 指针。
+一个内存块被放入快表之后的事情非常有趣。我们从一个空的快表链说起。如果堆的基址是 `0x150000`，维护大小为 1008 字节内存块的快表链表头的地址将是 `0x151e58`。快表链是空的，因此这个地方将有一个 `NULL` 指针。
 
 现在我们释放一个 1008 字节内存块。`0x151e58` 处的快表链表头将指向它，同时该块的前 4 个字节将被覆盖为一个 `NULL`，用来表明表尾。内存结构看起来正是我们利用一个被覆盖的对象指针所需要的：
 
