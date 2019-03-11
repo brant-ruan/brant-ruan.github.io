@@ -1,5 +1,5 @@
 ---
-title: 【文献翻译】Javascript 中的“堆风水”
+title: 【文献翻译】JavaScript 中的“堆风水”
 category: binary
 ---
 
